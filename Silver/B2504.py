@@ -20,7 +20,7 @@ for idx, n in enumerate(N):
             else:
                 temp = 0
                 length = len(stack_num) - 1
-                for i in range(length, -1 , -1):
+                for i in range(length, -1, -1):
                     if stack_num[i] == '(':
                         stack_num[-1] = temp * 2
                         print("stack:", end=" ")
@@ -65,7 +65,7 @@ for idx, n in enumerate(N):
                         stack_num.pop()
                         print("stack:", end=" ")
                         print(stack)
-                        print("stack_num:",end=" ")
+                        print("stack_num:", end=" ")
                         print(stack_num)
         else:
             print(0)
