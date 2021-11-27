@@ -9,6 +9,11 @@
 #define MAX 100000
 using namespace std;
 
+void Printfn(){
+  for(int i = 0; i < MAX; ++ i){
+    printf("\n");
+  }
+}
 
 void PrintEndl(){
   for(int i = 0 ; i < MAX; ++i){
@@ -38,8 +43,12 @@ double TimeCheck(void (*fptr)()){
 
 
 int main(){
-  
-  // cout << TimeCheck(Printn) << " ms";
+  double t1, t2, t3;
+  t1 = TimeCheck(Printn);
+  t2 = TimeCheck(PrintEndl);
+  t3 = TimeCheck(Printfn);
+
+  cout << t1 << ' ' << t2 << ' ' << t3;
 
   return 0;
 }
