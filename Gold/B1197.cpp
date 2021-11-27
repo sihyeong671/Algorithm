@@ -2,6 +2,7 @@
 #include<iostream>
 #include<algorithm>
 #include<vector>
+#include<queue>
 using namespace std;
 
 int V, E;
@@ -10,11 +11,11 @@ int tree[10001];
 struct Edge{
   int u,v,c;
   Edge(int u, int v, int c): u(u), v(v), c(c){}
-  bool operator <(Edge &e){return c < e.c;}
+  bool operator <(const Edge &e)const{return c > e.c;}
 };
 
 int find(int n){
-  if(tree[n] == -1) return n;
+  if(tree[n] == n) return n;
   return tree[n] = find(tree[n]); // 경로 압축
 }
 
@@ -27,22 +28,22 @@ void _union(int x, int y){
 int main(){
   cin >> V >> E;
   for(int i = 1; i <= V; ++i){
-    tree[i] = i;
+    tree[i] = i; 
   }
-  vector<Edge> v;
+  priority_queue<Edge, vector<Edge>> pq;
   int u_, v_, c_;
   for(int i = 0; i < E; ++i){
     cin >> u_ >> v_ >> c_;
-    v.push_back(Edge(u_, v_, c_));
-  }
-  sort(v.begin(), v.end());
-  int sum_ = 0;
-  for(int i = 0; i < v.size(); ++i){
-    if(find(v[i].u) != find(v[i].v)){
-      _union(v[i].u, v[i].v);
-      sum_ += v[i].c;
-    }
+    pq.push(Edge(u_, v_, c_));
   }
 
+  int sum_ = 0;
+  while(!pq.empty()){
+    if(find(pq.top().u) != find(pq.top().v)){
+      _union(pq.top().u, pq.top().v);
+      sum_ += pq.top().c;
+    }
+    pq.pop();
+  }
   cout << sum_;
 }
