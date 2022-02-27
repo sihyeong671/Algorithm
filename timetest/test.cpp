@@ -1,28 +1,40 @@
 #include<iostream>
 #include<vector>
-#include<algorithm>
 using namespace std;
 
-void showvv( vector< vector<int> > Q ){
-    int i,j,k ;  i = j = 0 ;
-    for( auto U : Q ){
-        for( auto v : U ) {
-            printf(" %3d", v) ; j++ ;
-        } cout << "\n";
-        i++; j=0 ;
-    }
-} // end of showit( )
+typedef vector<vector<long long>> matrix;
+const long long mod = 1000000007;
 
-int main () {
-    vector< vector<int> >  VV {
-    {1,  20, 31, 40, 50}, { 33, 20, 50},
-    {33, 20 },            { 32, 20, 51} ,
-    {51, 40, 30, 20},     {  1, 51, 99, 10 },
-    {50, 40, 30, 10},     { 33, 10, 30, 40, 50},
-    {50, 30, 10}          } ;
+long long n;
 
-    sort( VV.begin(), VV.end() );
-    showvv( VV );
+matrix operator * (matrix& a, matrix& b)
+{
+	matrix c(2, vector<long long>(2));
 
-    return 0;
+	for (int i = 0; i < 2; i++)
+		for (int j = 0; j < 2; j++){
+			for (int k = 0; k < 2; k++)
+				c[i][j] += a[i][k] * b[k][j];
+
+			c[i][j] %= mod;
+		}
+	return c;	
+}
+
+int main()
+{
+	cin >> n;
+
+	matrix ans = {{1,0}, {0,1}};
+	matrix a = {{1,1}, {1,0}};
+
+	while (n > 0)
+	{
+		if (n % 2 == 1)
+			ans = ans * a;
+		a = a * a;
+		n /= 2;
+	}
+	
+	cout << ans[0][1] << '\n';
 }
