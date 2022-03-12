@@ -28,19 +28,12 @@ int main(){
   for(int i = 1; i <= N; ++i){
     for(int j = 1; j <= N - i; ++j){
       dp[j][j+i] = INF;
-      // cout << j <<  ' ' << j+i << endl;
       for(int k = 0; k < i; ++k){
         dp[j][j+i] = min(dp[j][j+i], dp[j][j+k]+dp[j+k+1][j+i]+matrix_dot(j, j+k, i+j));
       }
     }
   }
 
-  // for(auto n: dp){
-  //   for(auto nn: n){
-  //     cout << nn << " ";
-  //   }
-  //   cout << endl;
-  // }
   cout << dp[1][N];
   
 
@@ -48,6 +41,5 @@ int main(){
 }
 
 int matrix_dot(int s, int m, int e){
-  // cout << v[s-1].first * v[m-1].second * v[e-1].second << endl;
   return (v[s-1].first * v[m-1].second * v[e-1].second);
 }
