@@ -6,28 +6,47 @@
 
 using namespace std;
 
+typedef pair<int, int> pii;
+
 int N;
+pii ans;
+
 int main(){
   cin >> N;
-  vector<long long> liquid(N);
+  
+  vector<int> v(N);
   for(int i = 0; i < N; ++i){
-    cin >> liquid[i];
+    cin >> v[i];
   }
-  sort(liquid.begin(), liquid.end());
-  int p_1 = 0, p_2 = N-1;
-  int sum_;
-  while(p_1 < p_2){
-    sum_ = p_1 + p_2;
-    if(sum_ > 0) p_2 -= 1; 
-    else if (sum_ < 0) p_1 += 1;
-    else break;
+
+  sort(v.begin(), v.end());
+
+  int p1 = 0, p2 = N-1;
+  int acidity = v[p1] + v[p2];
+
+  ans = {v[p1], v[p2]};
+  while(p2 > p1){
+
+    int c_acidity = v[p1] + v[p2]; 
+    pii tmp = {v[p1], v[p2]};
+
+    if(c_acidity > 0){ // 산도가 0보다 큰 경우
+      --p2;
+    }
+    else if(c_acidity < 0){ // 산도 0보다 작은 경우
+      ++p1;
+    }
+    else{
+      ans = tmp;
+      break;
+    }
+
+    if(abs(acidity) > abs(c_acidity)){
+      ans = tmp;
+      acidity = c_acidity;
+    }
   }
-  if(p_1 > p_2){
-    int tmp;
-    tmp = p_2;
-    p_2 = p_1;
-    p_1 = tmp;
-  }
-  cout << liquid[p_1] << ' ' << liquid[p_2];
-  return 0;
+
+  cout << ans.first << ' ' << ans.second;
+
 }
