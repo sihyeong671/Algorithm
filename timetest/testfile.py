@@ -1,11 +1,15 @@
-n = [[1,2,3], [4,5,6], [7,8,9]]
+class Test:
+    def __init__(self):
+        self.x = 0
+    
+    def get_self(self):
+        return self.x
 
-n_copy = n[:]
+test1 = Test()
+print(id(test1))
 
-n_copy[0][0] = -1
+def print_class(T):
+    print(id(T))
+    print(T.get_self())
 
-print(id(n))
-print(id(n_copy))
-
-for i in range(3):
-    print(id(n[i]), id(n_copy[i]))
+print_class(test1)
