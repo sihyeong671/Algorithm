@@ -1,26 +1,53 @@
 // 감소하는 수
 
-#include<iostream>
-#include<string>
+#include <iostream>
+#include <string>
 
 using namespace std;
+typedef long long ll;
 
+int check(ll n);
 int N;
+int cnt = -1;
+bool flag = false;
 
 int main(){
+
   cin >> N;
-  int n = 0;
-  int num = 0;
-  while(n <= N && num <= 1000000){
-    if(n < 10){
-      n++;
-      num++;
-      continue;
+
+  ll num = 0;
+  while(num <= 9876543210){
+    cnt += check(num);
+    if(cnt == N){
+      flag = true;
+      break;
     }
-    int length = to_string(num).size();
-    int pre;
-    for(int i = 0; i < length; i++){
-       
-    }
+    num++;
   }
+
+  if(flag) cout << num;
+  else cout << -1;
+}
+
+
+int check(ll n){
+
+  if(n < 10){
+    return 1;
+  }
+
+  int pre, current;
+
+  pre = n%10;
+  n /= 10;
+  while(n != 0){
+    current = n % 10;
+    n /= 10;
+    if(current <= pre){
+      return 0;
+    }
+    pre = current;
+  }
+  return 1;
+
 }
