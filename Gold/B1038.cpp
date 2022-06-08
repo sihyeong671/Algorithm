@@ -1,53 +1,69 @@
 // 감소하는 수
 
 #include <iostream>
+#include <vector>
 #include <string>
+#include <algorithm>
 
 using namespace std;
 typedef long long ll;
 
-int check(ll n);
+void dfs(ll num, int d);
+bool check(ll num);
 int N;
-int cnt = -1;
-bool flag = false;
+vector<bool> nums(10, false);
+vector<ll> v;
+
 
 int main(){
-
   cin >> N;
 
-  ll num = 0;
-  while(num <= 9876543210){
-    cnt += check(num);
-    if(cnt == N){
-      flag = true;
-      break;
-    }
-    num++;
+  dfs(0, 0);
+  sort(v.begin(), v.end(), less<>());
+
+  for(auto e : v){
+    cout << e << ' ';
   }
 
-  if(flag) cout << num;
-  else cout << -1;
+  // if(N+2 > v.size()) cout << -1;
+  // else cout << v[N];
 }
 
-
-int check(ll n){
-
-  if(n < 10){
-    return 1;
+void dfs(ll num, int d){
+  
+  if(d == 10){
+    return;
   }
 
-  int pre, current;
+  if(num < 10){
+    v.push_back(num);
+  }
 
-  pre = n%10;
-  n /= 10;
-  while(n != 0){
-    current = n % 10;
-    n /= 10;
-    if(current <= pre){
-      return 0;
+  for(int i = 0; i < 10; ++i){
+    if(!nums[i]){
+      nums[i] = true;
+      int tmp = num*10 + i;
+      if(check(tmp)){
+        dfs(tmp, d+1);
+      }
+      nums[i] = false;
     }
-    pre = current;
   }
-  return 1;
+}
 
+bool check(ll num){
+  
+  if(num < 10) return true;
+
+  ll pre = num % 10;
+  num /= 10;
+
+  while(num != 0){
+    ll current = num%10;
+    if(pre >= current) return false;
+    pre = current;
+    num /= 10;
+  }
+
+  return true;
 }
